@@ -7,7 +7,7 @@ from typing import Annotated
 
 import typer
 
-from .config import ensure_project_dirs, load_config, validation_warnings
+from .config import ensure_project_dirs, load_config, validate_config, validation_warnings
 from .lira_import import import_lira_forces, validate_lira_element_forces
 from .reports import write_markdown_report
 from .sp20_loads import build_minimal_load_cases
@@ -40,10 +40,12 @@ def doctor(config: Path = Path("config.example.yaml")) -> None:
 def validate_input(config: Path = Path("config.example.yaml")) -> None:
     """Validate input configuration and CSV templates."""
     cfg = load_config(config)
+    report = validate_config(cfg)
     typer.echo("Input configuration schema is valid.")
-    warnings = validation_warnings(cfg)
-    for warning in warnings:
-        typer.echo(f"WARNING: {warning}")
+    for issue in report.issues:
+        typer.echo(f"{issue.severity.value.upper()}: {issue.path}: {issue.message}")
+    if report.errors:
+        raise typer.Exit(1)
 
 
 @app.command("build-loads")
