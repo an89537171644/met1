@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from enum import StrEnum
 from pathlib import Path
 from typing import Any, Literal
 
@@ -156,6 +157,33 @@ class ReportsConfig(BaseModel):
     formats: list[str] = Field(default_factory=lambda: ["markdown", "csv"])
 
 
+class ConfigIssueSeverity(StrEnum):
+    ERROR = "error"
+    WARNING = "warning"
+
+
+class ConfigValidationIssue(BaseModel):
+    severity: ConfigIssueSeverity
+    path: str
+    message: str
+
+
+class ConfigValidationReport(BaseModel):
+    issues: list[ConfigValidationIssue] = Field(default_factory=list)
+
+    @property
+    def errors(self) -> list[ConfigValidationIssue]:
+        return [issue for issue in self.issues if issue.severity is ConfigIssueSeverity.ERROR]
+
+    @property
+    def warnings(self) -> list[ConfigValidationIssue]:
+        return [issue for issue in self.issues if issue.severity is ConfigIssueSeverity.WARNING]
+
+    @property
+    def ok(self) -> bool:
+        return not self.errors
+
+
 class AppConfig(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
@@ -232,16 +260,85 @@ def ensure_project_dirs(config: AppConfig) -> None:
         directory.mkdir(parents=True, exist_ok=True)
 
 
-def validation_warnings(config: AppConfig) -> list[str]:
-    warnings: list[str] = []
+def validate_config(config: AppConfig) -> ConfigValidationReport:
+    issues: list[ConfigValidationIssue] = []
+
+    def add_error(path: str, message: str) -> None:
+        issues.append(
+            ConfigValidationIssue(
+                severity=ConfigIssueSeverity.ERROR,
+                path=path,
+                message=message,
+            )
+        )
+
+    def add_warning(path: str, message: str) -> None:
+        issues.append(
+            ConfigValidationIssue(
+                severity=ConfigIssueSeverity.WARNING,
+                path=path,
+                message=message,
+            )
+        )
+
+    if not config.project.project_id.strip():
+        add_error("project.project_id", "Project id must not be empty.")
+    if not config.project.name.strip():
+        add_error("project.name", "Project name must not be empty.")
+    if not config.project.norms.steel_design.strip():
+        add_error("project.norms.steel_design", "SP 16 reference must not be empty.")
+    if not config.project.norms.loads.strip():
+        add_error("project.norms.loads", "SP 20 reference must not be empty.")
     if not config.project.norms.steel_design_edition:
-        warnings.append("project.norms.steel_design_edition is not set")
+        add_warning(
+            "project.norms.steel_design_edition",
+            "SP 16 edition/change is not set; reproducibility may suffer.",
+        )
     if not config.project.norms.loads_edition:
-        warnings.append("project.norms.loads_edition is not set")
-    if config.sp20_loads.snow.enabled and config.sp20_loads.snow.normative_snow_value_kpa is None:
-        warnings.append("sp20_loads.snow.normative_snow_value_kpa is not set")
-    if config.sp20_loads.wind.enabled and config.sp20_loads.wind.normative_wind_value_kpa is None:
-        warnings.append("sp20_loads.wind.normative_wind_value_kpa is not set")
+        add_warning(
+            "project.norms.loads_edition",
+            "SP 20 edition/change is not set; reproducibility may suffer.",
+        )
+
+    if config.sp20_loads.wind.enabled and not config.sp20_loads.location.terrain_type:
+        add_error(
+            "sp20_loads.location.terrain_type",
+            "Terrain type is required when wind loads are enabled.",
+        )
+    if not config.sp20_loads.location.city and not config.sp20_loads.location.region:
+        add_warning(
+            "sp20_loads.location.city",
+            "City or region is not set; store the climate data source explicitly.",
+        )
+
     if config.sp20_loads.permanent.roof_dead_kpa is None:
-        warnings.append("sp20_loads.permanent.roof_dead_kpa is not set")
-    return warnings
+        add_error(
+            "sp20_loads.permanent.roof_dead_kpa",
+            "Permanent roof load is required.",
+        )
+    if config.sp20_loads.permanent.purlins_kpa is None:
+        add_error(
+            "sp20_loads.permanent.purlins_kpa",
+            "Purlin load is required for the MVP load structure.",
+        )
+    if config.sp20_loads.snow.enabled and config.sp20_loads.snow.normative_snow_value_kpa is None:
+        add_error(
+            "sp20_loads.snow.normative_snow_value_kpa",
+            "Normative snow value is required when snow loads are enabled.",
+        )
+    if config.sp20_loads.wind.enabled and config.sp20_loads.wind.normative_wind_value_kpa is None:
+        add_error(
+            "sp20_loads.wind.normative_wind_value_kpa",
+            "Normative wind value is required when wind loads are enabled.",
+        )
+    if config.sp20_loads.roof_live.enabled and config.sp20_loads.roof_live.value_kpa is None:
+        add_error(
+            "sp20_loads.roof_live.value_kpa",
+            "Roof live load value is required when roof live load is enabled.",
+        )
+
+    return ConfigValidationReport(issues=issues)
+
+
+def validation_warnings(config: AppConfig) -> list[str]:
+    return [f"{issue.path}: {issue.message}" for issue in validate_config(config).warnings]

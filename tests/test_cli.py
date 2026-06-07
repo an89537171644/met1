@@ -21,9 +21,10 @@ def test_cli_doctor() -> None:
 def test_cli_validate_input_reports_warnings() -> None:
     result = CliRunner().invoke(app, ["validate-input"])
 
-    assert result.exit_code == 0
+    assert result.exit_code == 1
     assert "Input configuration schema is valid." in result.output
-    assert "WARNING:" in result.output
+    assert "ERROR:" in result.output
+    assert "sp20_loads.permanent.roof_dead_kpa" in result.output
 
 
 def test_cli_report_accepts_path_argument(tmp_path) -> None:

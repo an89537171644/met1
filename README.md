@@ -62,6 +62,8 @@ steel-frame-designer import-lira data/templates/lira_element_forces.csv
 steel-frame-designer report
 ```
 
+`config.example.yaml` является шаблоном. Команда `validate-input` показывает `ERROR` для обязательных пустых полей нагрузок и возвращает ненулевой код, пока эти поля не заполнены.
+
 ## Локальный старт
 
 ```powershell
