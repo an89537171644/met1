@@ -1,0 +1,2 @@
+case_id,lira_model_file,lira_version,run_date,norm_sp16_edition,norm_sp20_edition,export_files,model_hash,success,notes
+case_0001,models/case_0001.lir,уточнить,2026-06-07,уточнить,уточнить,element_forces;displacements;checks,,true,demo

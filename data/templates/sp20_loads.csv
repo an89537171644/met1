@@ -1,0 +1,5 @@
+case_id,load_id,group,subtype,scheme,direction,value,unit,tributary_width_m,gamma_f,duration_type,source_norm,notes
+case_0001,G_roof_dead,permanent,roof_dead,uniform_on_roof,gravity,,kPa,6.0,,permanent,SP 20.13330.2016,fill value
+case_0001,S_symmetric,snow,gable_roof,symmetric,gravity,,kPa,6.0,,short_term,SP 20.13330.2016,fill value
+case_0001,S_left_unbalanced,snow,gable_roof,left_unbalanced,gravity,,kPa,6.0,,short_term,SP 20.13330.2016,fill value
+case_0001,W_plus_x,wind,external_internal,plus_x,+X,,kPa,6.0,,short_term,SP 20.13330.2016,fill value

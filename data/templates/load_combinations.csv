@@ -1,0 +1,4 @@
+combo_id,case_id,limit_state,combination_type,leading_load_id,load_id,factor,source_norm,description
+ULS_001,case_0001,ULS,main,S_symmetric,G_roof_dead,,SP 20.13330.2016,fill factors by norm table
+ULS_001,case_0001,ULS,main,S_symmetric,S_symmetric,,SP 20.13330.2016,fill factors by norm table
+SLS_001,case_0001,SLS,deflection,S_symmetric,S_symmetric,,SP 20.13330.2016,serviceability combination

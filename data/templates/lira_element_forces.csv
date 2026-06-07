@@ -1,0 +1,2 @@
+case_id,combo_id,element_id,element_role,station_rel,N_kN,Qy_kN,Mz_kNm,ux_mm,uy_mm,rz_rad,utilization_percent,check_name
+case_0001,ULS_001,E1,left_column,0.0,,,,,,,,

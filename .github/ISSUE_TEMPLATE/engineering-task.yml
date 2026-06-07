@@ -1,0 +1,44 @@
+name: Engineering task
+description: Задача для разработки через ChatGPT/Codex
+title: "[Task]: "
+labels:
+  - task
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Цель
+      description: Что нужно получить в результате?
+      placeholder: Реализовать ...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Контекст
+      description: На какие документы, файлы или нормы опираться?
+      placeholder: docs/TZ.md, docs/sp20-loads.md, config.example.yaml
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Объем работ
+      description: Что входит и что не входит в задачу?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Критерии готовности
+      description: Как понять, что задача выполнена?
+      placeholder: pytest проходит, документация обновлена, CLI команда работает
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Ограничения и замечания
+      description: Нормативные, инженерные или учебные ограничения.
+    validations:
+      required: false

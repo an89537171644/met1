@@ -1,0 +1,2 @@
+case_id,target_section_id,target_mass_kg_m,max_utilization_percent,governing_combo,governing_element,governing_check,pass_status,notes
+case_0001,I30_demo,,,ULS_001,E2,,true,demo placeholder

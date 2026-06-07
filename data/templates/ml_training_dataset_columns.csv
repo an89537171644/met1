@@ -1,0 +1,10 @@
+column,group,type,unit,required,description
+span_m,geometry,float,m,yes,Frame span
+eave_height_m,geometry,float,m,yes,Eave height
+ridge_height_m,geometry,float,m,yes,Ridge height
+frame_spacing_m,geometry,float,m,yes,Tributary width
+roof_dead_kpa,loads,float,kPa,yes,Permanent roof load
+snow_value_kpa,loads,float,kPa,yes,Normative or computed snow load parameter
+wind_value_kpa,loads,float,kPa,yes,Normative or computed wind load parameter
+target_section_id,target,category,-,yes,Minimum passing single section
+max_utilization_percent,target,float,%,yes,Maximum utilization from LIRA/checks

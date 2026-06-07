@@ -1,0 +1,57 @@
+{
+  "updated_at": "2026-06-07",
+  "project": {
+    "name": "Подбор единого сечения плоской двухскатной однопролётной стальной рамы",
+    "context": "магистерский проект Станислава",
+    "norms": {
+      "steel_design": "СП 16.13330.2017 Стальные конструкции",
+      "loads": "СП 20.13330.2016 Нагрузки и воздействия",
+      "note": "в коде хранить редакцию и номера изменений"
+    },
+    "frame_type": "2D gable single-span steel frame",
+    "single_section_rule": "one section for columns and rafters",
+    "ml_source": "LIRA-SAPR / PK LIRA exports",
+    "ui": "CLI + Streamlit MVP"
+  },
+  "required_modules": [
+    "geometry",
+    "sections",
+    "sp20_loads",
+    "load_combinations",
+    "lira_import",
+    "ml_data",
+    "ml_model",
+    "checks_sp16",
+    "optimizer",
+    "reports",
+    "ui_streamlit"
+  ],
+  "sp20_load_groups": {
+    "mandatory": [
+      "dead loads",
+      "snow symmetric",
+      "snow unbalanced",
+      "wind +X",
+      "wind -X",
+      "roof maintenance if applicable"
+    ],
+    "conditional": [
+      "cranes",
+      "temperature",
+      "ice",
+      "equipment",
+      "special",
+      "construction stages"
+    ]
+  },
+  "ml": {
+    "recommended_task": "top-k section ranking with deterministic verification",
+    "targets": [
+      "target_section_id",
+      "target_mass_kg_m",
+      "max_utilization",
+      "governing_check"
+    ],
+    "safety_rule": "NN recommendation must be checked before final report"
+  }
+}

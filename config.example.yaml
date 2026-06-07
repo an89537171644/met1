@@ -1,0 +1,110 @@
+project:
+  project_id: example_001
+  name: steel_frame_single_section
+  norms:
+    steel_design: "SP 16.13330.2017"
+    steel_design_edition: "редакция/изменение указывается пользователем"
+    loads: "SP 20.13330.2016"
+    loads_edition: "редакция/изменение указывается пользователем"
+
+frame:
+  type: gable_single_span_2d
+  single_section_for:
+    - left_column
+    - left_rafter
+    - right_rafter
+    - right_column
+  geometry:
+    span_m: 18.0
+    eave_height_m: 6.0
+    ridge_height_m: 8.0
+    roof_slope_deg: null
+    frame_spacing_m: 6.0
+    building_length_m: 60.0
+    frame_count: 11
+  supports:
+    left_base: fixed
+    right_base: fixed
+  material:
+    steel_grade: C345
+    source: user_catalog_or_sp16_material_table
+
+section_catalog:
+  file: data/sections/section_catalog.csv
+  section_type: i_beam_or_welded_i
+  sort_by: mass_kg_m
+
+sp20_loads:
+  location:
+    city: null
+    region: null
+    snow_region: null
+    wind_region: null
+    terrain_type: null
+    ice_region: null
+    temperature_region: null
+  permanent:
+    steel_self_weight: auto_from_section
+    roof_dead_kpa: null
+    purlins_kpa: null
+    bracing_kpa: null
+    wall_cladding_kpa: null
+    equipment_kpa: 0.0
+  snow:
+    enabled: true
+    normative_snow_value_kpa: null
+    cases:
+      - S_symmetric
+      - S_left_unbalanced
+      - S_right_unbalanced
+  wind:
+    enabled: true
+    normative_wind_value_kpa: null
+    internal_pressure: consider_if_openings
+    cases:
+      - W_plus_x
+      - W_minus_x
+  roof_live:
+    enabled: true
+    value_kpa: null
+  temperature:
+    enabled: false
+    t_min_c: null
+    t_max_c: null
+    t_install_c: null
+  cranes:
+    enabled: false
+  ice:
+    enabled: false
+  special:
+    enabled: false
+
+load_combinations:
+  source: sp20
+  file: data/input/load_combinations.csv
+  generate_automatically: true
+
+lira_import:
+  raw_dir: data/raw/lira_exports
+  processed_dir: data/processed
+  required_exports:
+    - model_index
+    - element_forces
+    - nodal_displacements
+    - support_reactions
+    - section_checks
+    - selected_sections
+
+ml:
+  dataset_dir: data/datasets
+  target: selected_single_section
+  prediction_mode: top_k_classification_with_verification
+  top_k: 5
+  safety_rule: predicted_section_must_be_verified
+
+reports:
+  formats:
+    - markdown
+    - csv
+    - xlsx_optional
+    - pdf_later

@@ -1,0 +1,35 @@
+name: Data task
+description: Задача по данным ЛИРА, CSV, нагрузкам или ML-датасету
+title: "[Data]: "
+labels:
+  - data
+body:
+  - type: textarea
+    id: source
+    attributes:
+      label: Источник данных
+      description: Какие файлы или экспорты используются?
+      placeholder: data/templates/lira_element_forces.csv
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидаемый результат
+      description: Что нужно получить после обработки?
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Проверки качества
+      description: Какие поля, единицы и связи нужно проверить?
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Риски
+      description: Что может быть неполным, неоднозначным или нормативно чувствительным?
+    validations:
+      required: false

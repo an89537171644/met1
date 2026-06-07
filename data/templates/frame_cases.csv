@@ -1,0 +1,2 @@
+case_id,project_name,norm_sp16,norm_sp16_edition,norm_sp20,norm_sp20_edition,span_m,eave_height_m,ridge_height_m,roof_slope_deg,frame_spacing_m,building_length_m,frame_count,support_left,support_right,steel_grade,section_catalog_id,notes
+case_0001,demo,SP 16.13330.2017,уточнить,SP 20.13330.2016,уточнить,18.0,6.0,8.0,,6.0,60.0,11,fixed,fixed,C345,gost_i_beam,demo row
