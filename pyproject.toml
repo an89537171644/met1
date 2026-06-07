@@ -29,6 +29,7 @@ ml = [
 
 [project.scripts]
 steel-frame-designer = "steel_frame_designer.cli:app"
+steel-frame = "steel_frame_designer.cli:app"
 
 [tool.setuptools.packages.find]
 where = ["src"]

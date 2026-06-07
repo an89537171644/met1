@@ -51,6 +51,17 @@
 Опирайся на docs/TZ.md и config.example.yaml.
 ```
 
+## CLI
+
+```powershell
+steel-frame-designer init
+steel-frame-designer doctor
+steel-frame-designer validate-input
+steel-frame-designer build-loads
+steel-frame-designer import-lira data/templates/lira_element_forces.csv
+steel-frame-designer report
+```
+
 ## Локальный старт
 
 ```powershell

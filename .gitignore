@@ -8,8 +8,15 @@ dist/
 build/
 *.egg-info/
 data/raw/
+data/input/*
+!data/input/.gitkeep
+data/output/*
+!data/output/.gitkeep
 data/processed/
 data/datasets/
 data/models/
-reports/generated/
+reports/*
+!reports/.gitkeep
+logs/*
+!logs/.gitkeep
 .env
