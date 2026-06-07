@@ -115,3 +115,51 @@ class FrameGeometry(BaseModel):
                 length_m=self.eave_height_m,
             ),
         ]
+
+    def build_frame(self) -> "GableFrame":
+        """Build the basic connected N1-N5/E1-E4 frame object."""
+        return GableFrame(
+            geometry=self,
+            nodes=self.build_nodes(),
+            elements=self.build_elements(),
+        )
+
+
+class GableFrame(BaseModel):
+    """A connected 2D one-span gable frame model without structural analysis."""
+
+    geometry: FrameGeometry
+    nodes: list[FrameNode]
+    elements: list[FrameElement]
+
+    @model_validator(mode="after")
+    def validate_connectivity(self) -> "GableFrame":
+        node_ids = [node.node_id for node in self.nodes]
+        if len(node_ids) != len(set(node_ids)):
+            raise ValueError("frame nodes must have unique node_id values")
+
+        element_ids = [element.element_id for element in self.elements]
+        if len(element_ids) != len(set(element_ids)):
+            raise ValueError("frame elements must have unique element_id values")
+
+        node_id_set = set(node_ids)
+        for element in self.elements:
+            if element.start_node_id not in node_id_set or element.end_node_id not in node_id_set:
+                raise ValueError(f"element {element.element_id} references unknown frame node")
+        return self
+
+    @property
+    def node_ids(self) -> list[str]:
+        return [node.node_id for node in self.nodes]
+
+    @property
+    def element_ids(self) -> list[str]:
+        return [element.element_id for element in self.elements]
+
+    @property
+    def element_roles(self) -> list[str]:
+        return [element.role for element in self.elements]
+
+    @property
+    def total_axis_length_m(self) -> float:
+        return sum(element.length_m for element in self.elements)
