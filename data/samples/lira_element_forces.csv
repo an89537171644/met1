@@ -1,0 +1,6 @@
+case_id,combo_id,element_id,element_role,station_rel,N_kN,Qy_kN,Mz_kNm,ux_mm,uy_mm,rz_rad,utilization_percent,check_name
+demo_001,ULS_SNOW,E1,left_column,0.00,-142.0,18.5,64.0,0.0,0.0,0.0000,68.0,demo_strength_stability
+demo_001,ULS_SNOW,E2,left_rafter,0.50,-96.0,32.0,118.0,0.0,-18.4,0.0012,82.0,demo_strength_stability
+demo_001,ULS_SNOW,E3,right_rafter,0.50,-94.0,-31.5,-116.0,0.0,-18.1,-0.0011,80.0,demo_strength_stability
+demo_001,ULS_WIND,E4,right_column,1.00,-120.0,-24.0,-72.0,7.5,0.0,-0.0008,61.0,demo_strength_stability
+demo_001,SLS_SNOW,E2,left_rafter,0.50,-72.0,18.0,74.0,0.0,-24.0,0.0009,55.0,demo_deflection

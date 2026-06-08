@@ -1,0 +1,2 @@
+case_id,target_section_id,target_mass_kg_m,max_utilization_percent,governing_combo,governing_element,governing_check,pass_status,notes
+demo_001,I30_demo,36.5,82.0,ULS_SNOW,E2,demo_strength_stability,true,demo label from sample LIRA envelope

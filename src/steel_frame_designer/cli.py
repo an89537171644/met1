@@ -8,6 +8,7 @@ from typing import Annotated
 import typer
 
 from .config import ensure_project_dirs, load_config, validate_config, validation_warnings
+from .demo import run_demo as execute_demo
 from .lira_import import import_lira_forces, validate_lira_element_forces
 from .reports import write_markdown_report
 from .sp20_loads import build_minimal_load_cases
@@ -91,6 +92,30 @@ def predict() -> None:
 def verify() -> None:
     """Verify candidate sections."""
     typer.echo("Verification is not implemented yet.")
+
+
+@app.command("run-demo")
+def run_demo(
+    frame_case: Annotated[
+        Path,
+        typer.Option(help="Demo frame YAML file."),
+    ] = Path("data/samples/frame_case.yaml"),
+    sample_root: Annotated[
+        Path,
+        typer.Option(help="Directory with demo CSV samples."),
+    ] = Path("data/samples"),
+    output_root: Annotated[
+        Path,
+        typer.Option(help="Directory where demo outputs are written."),
+    ] = Path("."),
+) -> None:
+    """Run the full demo pipeline."""
+    result = execute_demo(frame_case=frame_case, sample_root=sample_root, output_root=output_root)
+    for step in result.steps:
+        typer.echo(f"{step}: ok")
+    typer.echo(f"Selected section: {result.selected_section_id}")
+    for path in result.output_files:
+        typer.echo(f"Generated: {path}")
 
 
 @app.command()
