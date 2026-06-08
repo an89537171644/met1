@@ -1,0 +1,99 @@
+project:
+  project_id: demo_001
+  name: demo_gable_frame_single_section
+  norms:
+    steel_design: "SP 16.13330.2017"
+    steel_design_edition: "demo sample reference; not a normative coefficient source"
+    loads: "SP 20.13330.2016"
+    loads_edition: "demo sample reference; not a normative coefficient source"
+
+frame:
+  type: gable_single_span_2d
+  single_section_for:
+    - left_column
+    - left_rafter
+    - right_rafter
+    - right_column
+  geometry:
+    span_m: 18.0
+    eave_height_m: 6.0
+    ridge_height_m: 8.0
+    roof_slope_deg: null
+    frame_spacing_m: 6.0
+    building_length_m: 60.0
+    frame_count: 11
+  supports:
+    left_base: fixed
+    right_base: fixed
+  material:
+    steel_grade: C345
+    source: demo sample material label
+
+section_catalog:
+  file: data/samples/section_catalog.csv
+  section_type: i_beam_demo
+  sort_by: mass_kg_m
+
+sp20_loads:
+  location:
+    city: Demo City
+    region: Demo Region
+    snow_region: demo
+    wind_region: demo
+    terrain_type: B
+  permanent:
+    steel_self_weight: auto_from_section
+    roof_dead_kpa: 0.35
+    purlins_kpa: 0.08
+    bracing_kpa: 0.03
+    wall_cladding_kpa: 0.0
+    equipment_kpa: 0.0
+  snow:
+    enabled: true
+    normative_snow_value_kpa: 1.8
+    cases:
+      - S_symmetric
+      - S_left_unbalanced
+      - S_right_unbalanced
+  wind:
+    enabled: true
+    normative_wind_value_kpa: 0.38
+    internal_pressure: closed_demo
+    cases:
+      - W_plus_x
+      - W_minus_x
+  roof_live:
+    enabled: true
+    value_kpa: 0.7
+  temperature:
+    enabled: false
+  cranes:
+    enabled: false
+  ice:
+    enabled: false
+  special:
+    enabled: false
+
+load_combinations:
+  source: demo_csv
+  file: data/samples/load_combinations.csv
+  generate_automatically: false
+
+lira_import:
+  raw_dir: data/samples
+  processed_dir: data/processed
+  required_exports:
+    - element_forces
+    - selected_sections
+
+ml:
+  dataset_dir: data/processed
+  target: selected_single_section
+  prediction_mode: top_k_classification_with_verification
+  top_k: 3
+  safety_rule: predicted_section_must_be_verified
+
+reports:
+  formats:
+    - markdown
+    - csv

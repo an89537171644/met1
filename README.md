@@ -59,6 +59,7 @@ steel-frame-designer doctor
 steel-frame-designer validate-input
 steel-frame-designer build-loads
 steel-frame-designer import-lira data/templates/lira_element_forces.csv
+steel-frame-designer run-demo
 steel-frame-designer report
 ```
 
@@ -72,5 +73,23 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 pytest
 ```
+
+### Demo end-to-end
+
+```powershell
+steel-frame-designer run-demo
+```
+
+Команда запускает демонстрационный сценарий:
+`validate-input -> build-loads -> import-lira -> build-dataset -> train -> predict -> verify -> report`.
+
+После успешного запуска появляются:
+
+- `data/processed/ml_dataset.csv`
+- `data/output/predictions.csv`
+- `reports/demo_report.md`
+- `artifacts/baseline_model.json`
+
+**Внимание:** ML-рекомендация не является нормативным расчётом по СП 16/СП 20. Для инженерного применения требуется отдельная проверка расчётным модулем или ЛИРА.
 
 Пока кодовая часть является каркасом. Полный инженерный расчет по СП 16 в MVP не заявляется без отдельной верификации.

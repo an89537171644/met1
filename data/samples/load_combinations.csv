@@ -1,0 +1,8 @@
+combo_id,case_id,limit_state,combination_type,leading_load_id,load_id,factor,source_norm,description
+ULS_SNOW,demo_001,ULS,main,S_symmetric,G_roof_dead,1.10,SP 20.13330.2016 demo,demo combination factor
+ULS_SNOW,demo_001,ULS,main,S_symmetric,G_purlins_bracing,1.10,SP 20.13330.2016 demo,demo combination factor
+ULS_SNOW,demo_001,ULS,main,S_symmetric,S_symmetric,1.40,SP 20.13330.2016 demo,demo combination factor
+ULS_WIND,demo_001,ULS,main,W_plus_x,G_roof_dead,1.10,SP 20.13330.2016 demo,demo combination factor
+ULS_WIND,demo_001,ULS,main,W_plus_x,W_plus_x,1.40,SP 20.13330.2016 demo,demo combination factor
+SLS_SNOW,demo_001,SLS,deflection,S_symmetric,G_roof_dead,1.00,SP 20.13330.2016 demo,demo serviceability factor
+SLS_SNOW,demo_001,SLS,deflection,S_symmetric,S_symmetric,1.00,SP 20.13330.2016 demo,demo serviceability factor

@@ -1,0 +1,9 @@
+case_id,load_id,group,subtype,scheme,direction,value,unit,tributary_width_m,gamma_f,duration_type,source_norm,notes
+demo_001,G_roof_dead,permanent,roof_dead,uniform_on_roof,gravity,0.35,kPa,6.0,1.10,permanent,SP 20.13330.2016 demo,educational sample value
+demo_001,G_purlins_bracing,permanent,purlins_bracing,uniform_on_roof,gravity,0.11,kPa,6.0,1.10,permanent,SP 20.13330.2016 demo,educational sample value
+demo_001,S_symmetric,snow,gable_roof,symmetric,gravity,1.80,kPa,6.0,1.40,short_term,SP 20.13330.2016 demo,educational sample value
+demo_001,S_left_unbalanced,snow,gable_roof,left_unbalanced,gravity,1.30,kPa,6.0,1.40,short_term,SP 20.13330.2016 demo,educational sample value
+demo_001,S_right_unbalanced,snow,gable_roof,right_unbalanced,gravity,1.30,kPa,6.0,1.40,short_term,SP 20.13330.2016 demo,educational sample value
+demo_001,W_plus_x,wind,external_internal,plus_x,+X,0.38,kPa,6.0,1.40,short_term,SP 20.13330.2016 demo,educational sample value
+demo_001,W_minus_x,wind,external_internal,minus_x,-X,0.38,kPa,6.0,1.40,short_term,SP 20.13330.2016 demo,educational sample value
+demo_001,Q_roof_maintenance,roof_live,maintenance,uniform_on_roof,gravity,0.70,kPa,6.0,1.20,short_term,SP 20.13330.2016 demo,educational sample value
